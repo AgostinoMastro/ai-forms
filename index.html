@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Custom Form</title>
     <style>
+        /* Use matching font-family (replace with specific font if needed) */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap'); /* Example font import */
+
         /* Form container styling */
         form {
             max-width: 100%;
@@ -12,9 +15,10 @@
             margin: 0 auto;
             padding: 20px;
             background-color: #F9F7F7;
-            border-radius: 0; /* No corner radius */
+            border-radius: 10px; /* Rounded corners */
             border: none;
             box-sizing: border-box;
+            font-family: 'Inter', sans-serif; /* Set font family */
         }
         /* Input and button styling */
         input[type="text"], input[type="email"], input[type="tel"], button {
@@ -22,10 +26,10 @@
             padding: 10px;
             margin: 10px 0;
             border: 1px solid #FFFFFF; /* White border */
-            border-radius: 0; /* No corner radius */
+            border-radius: 10px; /* Rounded corners */
             background-color: #FFFFFF;
             color: #000000; /* Black text */
-            font-family: Inter, sans-serif;
+            font-family: 'Inter', sans-serif; /* Set font family */
             font-size: 15px;
             box-sizing: border-box;
         }
@@ -44,19 +48,15 @@
             color: #FFFFFF;
             border: none;
             cursor: pointer;
-            font-family: Inter, sans-serif;
+            font-family: 'Inter', sans-serif; /* Set font family */
             font-size: 15px;
             padding: 12px;
             text-align: center;
             display: block;
+            border-radius: 10px; /* Rounded corners */
         }
         button:hover {
             background-color: #444444; /* Darker shade on hover */
-        }
-        /* Optional Link Styling (if applicable) */
-        a {
-            color: #0066CC; /* Link color */
-            text-decoration: underline;
         }
     </style>
 </head>
