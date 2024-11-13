@@ -58,6 +58,18 @@
         button:hover {
             background-color: #444444; /* Darker shade on hover */
         }
+        /* Thank you message styling */
+        .thank-you-message {
+            text-align: center;
+            font-family: 'Inter', sans-serif;
+            font-size: 18px;
+            color: #000000;
+            margin-top: 20px;
+        }
+        .thank-you-message .checkmark {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 <body>
@@ -73,6 +85,12 @@
 
         <button type="submit">Get a Call Now!</button>
     </form>
+
+    <div id="thankYouMessage" class="thank-you-message" style="display: none;">
+        <div class="checkmark">✔️</div>
+        <p>Thank you!</p>
+        <p>Check your phone now</p>
+    </div>
 
     <script>
         document.getElementById('customForm').addEventListener('submit', async function(event) {
@@ -96,7 +114,9 @@
                 });
 
                 if (response.ok) {
-                    alert('Form submitted successfully!');
+                    // Hide form and show thank you message
+                    document.getElementById('customForm').style.display = 'none';
+                    document.getElementById('thankYouMessage').style.display = 'block';
                 } else {
                     alert('Failed to submit the form.');
                 }
