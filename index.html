@@ -52,6 +52,11 @@
         button:hover {
             background-color: #444444;
         }
+        .error-message {
+            color: red;
+            font-size: 14px;
+            margin-top: 5px;
+        }
         .thank-you-message {
             text-align: center;
             font-family: 'Inter', sans-serif;
@@ -62,6 +67,7 @@
         .thank-you-message .checkmark {
             font-size: 40px;
             margin-bottom: 10px;
+            color: #000000;
         }
     </style>
 </head>
@@ -77,6 +83,7 @@
         <input type="tel" id="phone" name="phone" required placeholder="Phone Number">
 
         <button type="submit">Get a Call Now!</button>
+        <div id="errorMessage" class="error-message" style="display: none;"></div>
     </form>
 
     <div id="thankYouMessage" class="thank-you-message" style="display: none;">
@@ -89,6 +96,11 @@
         document.getElementById('customForm').addEventListener('submit', async function(event) {
             event.preventDefault();
 
+            // Clear previous error messages
+            const errorMessageElement = document.getElementById('errorMessage');
+            errorMessageElement.style.display = 'none';
+            errorMessageElement.textContent = '';
+
             // Gather form data
             const fullName = document.getElementById('fullName').value.trim();
             const email = document.getElementById('email').value.trim();
@@ -97,14 +109,14 @@
             // Email validation to ensure only work emails
             const workEmailPattern = /^[^@]+@(?!gmail\.com|yahoo\.com|hotmail\.com|aol\.com|icloud\.com|outlook\.com)[^@]+\.[^@]+$/;
             if (!workEmailPattern.test(email)) {
-                alert('Please enter a valid work email address.');
+                showError('Please enter a valid work email address.');
                 return;
             }
 
-            // Phone number validation (basic example, adjust as needed)
-            const phonePattern = /^\+?[1-9]\d{1,14}$/;
+            // Phone number validation for Canadian and US numbers
+            const phonePattern = /^(?:\+1[-.\s]?)?(\(?\d{3}\)?[-.\s]?)\d{3}[-.\s]?\d{4}$/;
             if (!phonePattern.test(phone)) {
-                alert('Please enter a valid phone number.');
+                showError('Please enter a valid Canadian or US phone number.');
                 return;
             }
 
@@ -125,13 +137,19 @@
                     document.getElementById('customForm').style.display = 'none';
                     document.getElementById('thankYouMessage').style.display = 'block';
                 } else {
-                    alert('Failed to submit the form.');
+                    showError('Failed to submit the form.');
                 }
             } catch (error) {
                 console.error('Error submitting form:', error);
-                alert('An error occurred while submitting the form.');
+                showError('An error occurred while submitting the form.');
             }
         });
+
+        function showError(message) {
+            const errorMessageElement = document.getElementById('errorMessage');
+            errorMessageElement.textContent = message;
+            errorMessageElement.style.display = 'block';
+        }
     </script>
 </body>
 </html>
