@@ -5,60 +5,53 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Custom Form</title>
     <style>
-        /* Use matching font-family (replace with specific font if needed) */
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap'); /* Example font import */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
 
-        /* Form container styling */
         form {
             max-width: 100%;
             min-height: 100px;
             margin: 0 auto;
             padding: 20px;
             background-color: #F9F7F7;
-            border-radius: 10px; /* Rounded corners */
+            border-radius: 10px;
             border: none;
             box-sizing: border-box;
-            font-family: 'Inter', sans-serif; /* Set font family */
+            font-family: 'Inter', sans-serif;
         }
-        /* Input and button styling */
         input[type="text"], input[type="email"], input[type="tel"], button {
             width: 100%;
             padding: 10px;
             margin: 10px 0;
-            border: 1px solid #FFFFFF; /* White border */
-            border-radius: 10px; /* Rounded corners */
+            border: 1px solid #FFFFFF;
+            border-radius: 10px;
             background-color: #FFFFFF;
-            color: #000000; /* Black text */
-            font-family: 'Inter', sans-serif; /* Set font family */
+            color: #000000;
+            font-family: 'Inter', sans-serif;
             font-size: 15px;
             box-sizing: border-box;
         }
-        /* Input focus styling */
         input:focus {
             outline: none;
-            border-color: #DFDFDF; /* Focus outline color */
+            border-color: #DFDFDF;
         }
-        /* Placeholder styling */
         input::placeholder {
-            color: #747A7A; /* Placeholder text color */
+            color: #747A7A;
         }
-        /* Button styling */
         button {
             background-color: #000000;
             color: #FFFFFF;
             border: none;
             cursor: pointer;
-            font-family: 'Inter', sans-serif; /* Set font family */
+            font-family: 'Inter', sans-serif;
             font-size: 15px;
             padding: 12px;
             text-align: center;
             display: block;
-            border-radius: 10px; /* Rounded corners */
+            border-radius: 10px;
         }
         button:hover {
-            background-color: #444444; /* Darker shade on hover */
+            background-color: #444444;
         }
-        /* Thank you message styling */
         .thank-you-message {
             text-align: center;
             font-family: 'Inter', sans-serif;
@@ -69,17 +62,16 @@
         .thank-you-message .checkmark {
             font-size: 40px;
             margin-bottom: 10px;
-            color: #000000;
         }
     </style>
 </head>
 <body>
     <form id="customForm">
-        <label for="firstName">First Name</label>
-        <input type="text" id="firstName" name="firstName" required placeholder="First Name">
+        <label for="fullName">Full Name</label>
+        <input type="text" id="fullName" name="fullName" required placeholder="Full Name">
 
-        <label for="email">Email Address</label>
-        <input type="email" id="email" name="email" required placeholder="Enter your email address">
+        <label for="email">Work Email Address</label>
+        <input type="email" id="email" name="email" required placeholder="Enter your work email address">
 
         <label for="phone">Phone Number</label>
         <input type="tel" id="phone" name="phone" required placeholder="Phone Number">
@@ -98,14 +90,28 @@
             event.preventDefault();
 
             // Gather form data
-            const formData = {
-                firstName: document.getElementById('firstName').value,
-                email: document.getElementById('email').value,
-                phone: document.getElementById('phone').value
-            };
+            const fullName = document.getElementById('fullName').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+
+            // Email validation to ensure only work emails
+            const workEmailPattern = /^[^@]+@(?!gmail\.com|yahoo\.com|hotmail\.com|aol\.com|icloud\.com|outlook\.com)[^@]+\.[^@]+$/;
+            if (!workEmailPattern.test(email)) {
+                alert('Please enter a valid work email address.');
+                return;
+            }
+
+            // Phone number validation (basic example, adjust as needed)
+            const phonePattern = /^\+?[1-9]\d{1,14}$/;
+            if (!phonePattern.test(phone)) {
+                alert('Please enter a valid phone number.');
+                return;
+            }
+
+            const formData = { fullName, email, phone };
 
             try {
-                // Send form data to Make.com webhook
+                // Send form data to Make.com webhook only on submission
                 const response = await fetch('https://hook.us1.make.com/ad1ohvfsxftvapxrqizsa3hm6iv51q4n', {
                     method: 'POST',
                     headers: {
